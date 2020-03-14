@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: mvm1914
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://mvm1914.de'
+paths:
+  /wp-json/jwt-auth/v1/token:
+    post:
+      summary: Create JSON-Web- Token
+      operationId: post-wp-json-jwt-auth-v1-token
+      responses:
+        '200':
+          description: 'The user will receive this message, if the login was successful.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user_email:
+                    type: string
+                  user_nicname:
+                    type: string
+                  user_display_name:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbXZtMTkxNC5kZSIsImlhdCI6MTU4NDIwODUxMiwibmJmIjoxNTg0MjA4NTEyLCJleHAiOjE1ODQ4MTMzMTIsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.VozRX-5xI76hHV29AYFvsisX1YXaT4W-pjWuI9APA6Q
+                    user_email: simon@neidig-web.de
+                    user_nicename: sneidig
+                    user_display_name: Simon Neidig
+        '403':
+          description: 'This message will be returned, if the password does not match to the username or one field is missing.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invalid-Creadentials'
+              examples:
+                Example - wrong password:
+                  value:
+                    code: '[jwt_auth] incorrect_password'
+                    message: '<strong>FEHLER</strong>: Das Passwort, das du für den Benutzernamen <strong>SNeidig</strong> eingegeben hast, ist nicht korrekt. <a href="https://mvm1914.de/wp-login.php?action=lostpassword">Passwort vergessen?</a>'
+                    data:
+                      status: 403
+                Example - missing field:
+                  value:
+                    code: '[jwt_auth] empty_password'
+                    message: '<strong>FEHLER</strong>: Das Passwortfeld ist leer.'
+                    data:
+                      status: 403
+      tags:
+        - Authorization
+      description: This route is for generating a JSON Web Token by given username and password.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Content-Type: application/json'
+  /wp-json/jwt-auth/v1/token/validate:
+    post:
+      summary: Validate JSON-Web-Token
+      operationId: post-wp-json-jwt-auth-v1-token-validate
+      responses:
+        '200':
+          description: 'The user will receive a status-code 200, if the given JWT is valid.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      status:
+                        type: integer
+              examples:
+                Example:
+                  value:
+                    code: jwt_auth_valid_token
+                    data:
+                      status: 200
+        '403':
+          description: 'The user receives a status-code 403, if the given JWT is invalid.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: jwt_auth_invalid_token
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      status:
+                        type: number
+                        description: '403'
+              examples:
+                Example:
+                  value:
+                    code: jwt_auth_invalid_token
+                    message: Signature verification failed
+                    data:
+                      status: 403
+      tags:
+        - Authorization
+      description: This route allows a validation of the JWT.
+      security:
+        - JSON Web Token: []
+components:
+  schemas:
+    Invalid-Creadentials:
+      title: Invalid-Creadentials
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      x-examples:
+        Example - Invalid Password:
+          code: '[jwt_auth] incorrect_password'
+          message: '<strong>FEHLER</strong>: Das Passwort, das du für den Benutzernamen <strong>SNeidig</strong> eingegeben hast, ist nicht korrekt. <a href="https://mvm1914.de/wp-login.php?action=lostpassword">Passwort vergessen?</a>'
+          data:
+            status: 403
+        Example - Missing Field:
+          code: '[jwt_auth] empty_password'
+          message: '<strong>FEHLER</strong>: Das Passwortfeld ist leer.'
+          data:
+            status: 403
+  securitySchemes:
+    JSON Web Token:
+      type: http
+      scheme: Bearer
