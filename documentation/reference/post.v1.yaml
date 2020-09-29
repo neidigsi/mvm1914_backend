@@ -1,0 +1,18 @@
+title: Short Form of an Article
+type: object
+description: 'This shortened form of an article will be returned to the user, if an array of all articles is reqeusted.'
+properties:
+  titel:
+    type: string
+  extract:
+    type: string
+  date:
+    type: string
+  categories:
+    type: array
+    items:
+      type: string
+  author:
+    type: string
+  thumbnail_link:
+    type: string

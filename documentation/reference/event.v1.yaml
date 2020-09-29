@@ -1,0 +1,18 @@
+title: Short Form of an Event
+type: object
+description: ''
+properties:
+  title:
+    type: string
+  startDate:
+    type: string
+  endDate:
+    type: string
+  location:
+    $ref: ./location.v1.yaml
+  categories:
+    type: array
+    items:
+      type: string
+  thumbnail_link:
+    type: string

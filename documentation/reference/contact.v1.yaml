@@ -1,0 +1,9 @@
+title: Contactperson in the Club
+type: object
+properties:
+  name:
+    type: string
+  person:
+    type: string
+  mail:
+    type: string

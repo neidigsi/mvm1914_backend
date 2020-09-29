@@ -1,14 +1,19 @@
 openapi: 3.0.0
 info:
-  title: mvm1914
+  title: Musikverein 1914 Münster e. V.
   version: '1.0'
   description: ''
+  contact:
+    name: Simon Neidig
+    email: simon.neidig@mvm1914.de
+  license:
+    name: MIT
 servers:
-  - url: 'http://mvm1914.de'
+  - url: 'https://mvm1914.de'
 paths:
   /wp-json/jwt-auth/v1/token:
     post:
-      summary: Create JSON-Web- Token
+      summary: Create JSON-Web-Token
       operationId: post-wp-json-jwt-auth-v1-token
       responses:
         '200':
@@ -126,6 +131,259 @@ paths:
       description: This route allows a validation of the JWT.
       security:
         - JSON Web Token: []
+  /wp-json/mvm/v1/post:
+    get:
+      summary: Retrieve Information about all Articles
+      tags:
+        - Post
+      responses:
+        '200':
+          description: 'If the request was successful, the user will receive an array of all articles in an shortened form.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./post.v1.yaml
+              examples:
+                Example: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+        '':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./post.v1.yaml
+          description: A response to a successful request consits of an array of all shortened information about articles of the homepage.
+      operationId: get-wp-json-mvm-v1-post
+      description: ''
+  '/wp-json/mvm/v1/post/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Retrieve Information about a specific Article
+      tags:
+        - Post
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./post_extended.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-post-id
+  '/wp-json/mvm/v1/event/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Retrieve Information about a specific Event
+      tags:
+        - Event
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./event_extended.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-event-id
+  /wp-json/mvm/v1/event:
+    get:
+      summary: Retrieve Information about all Events
+      tags:
+        - Event
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./event.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-event
+  /wp-json/mvm/v1/gallery:
+    get:
+      summary: Retrieve Information about all Galleries
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    year:
+                      type: integer
+                    galleries:
+                      type: array
+                      items:
+                        $ref: ./gallery.v1.yaml
+              examples: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-gallery
+  '/wp-json/mvm/v1/gallery/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Retrieve Information about a specific Gallery
+      tags:
+        - Gallery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./gallery_extended.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-gallery-id
+  /wp-json/mvm/v1/contact:
+    get:
+      summary: Request for Contactpersons
+      tags:
+        - Contact
+      responses:
+        '200':
+          description: The response to a successful response delivers all contactpersons of the club.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./contact.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-contact
+  /wp-json/mvm/v1/group:
+    get:
+      summary: Retrieve all Groups of the Club
+      tags:
+        - Group
+      responses:
+        '200':
+          description: If the request was successful the user will receive an array of all groups in the club.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./group.v1.yaml
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    error: {}
+      operationId: get-wp-json-mvm-v1-group
 components:
   schemas:
     Invalid-Creadentials:

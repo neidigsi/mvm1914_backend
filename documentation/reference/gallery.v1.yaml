@@ -1,0 +1,8 @@
+title: Shortened Version of a Gallery
+type: object
+description: ''
+properties:
+  title:
+    type: string
+  thumbnail_link:
+    type: string

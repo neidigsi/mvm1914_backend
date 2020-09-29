@@ -1,0 +1,17 @@
+title: Extended Version of an Event
+type: object
+properties:
+  title:
+    type: string
+  startDate:
+    type: string
+  endDate:
+    type: string
+  location:
+    $ref: ./location.v1.yaml
+  link:
+    type: string
+  thumbnail_link:
+    type: string
+  description:
+    type: string

@@ -1,0 +1,16 @@
+title: Extended Version of an Article
+type: object
+description: 'This version of an article will be delivered to the user, if an specific article is requested.'
+properties:
+  title:
+    type: string
+  url:
+    type: string
+  content:
+    type: string
+  thumbnail_link:
+    type: string
+  date:
+    type: string
+  author:
+    type: string

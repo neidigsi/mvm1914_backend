@@ -1,0 +1,11 @@
+title: Group in the Club
+type: object
+properties:
+  name:
+    type: string
+  management:
+    type: string
+  time:
+    type: string
+  location:
+    $ref: ./location.v1.yaml

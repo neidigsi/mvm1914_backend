@@ -1,0 +1,16 @@
+title: Extended Version of a Gallery
+type: object
+description: ''
+properties:
+  title:
+    type: string
+  link:
+    type: string
+  imageLinks:
+    type: array
+    items:
+      type: string
+  imagePreviewLinks:
+    type: array
+    items:
+      type: string

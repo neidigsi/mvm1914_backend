@@ -1,0 +1,20 @@
+title: Location where an Event takes place
+type: object
+properties:
+  name:
+    type: string
+  steet:
+    type: string
+  city:
+    type: string
+  state:
+    type: string
+  county:
+    type: string
+  plz:
+    type: string
+  latitude:
+    type: string
+  longitude:
+    type: string
+description: This object includes all information about an event-location. This means in addition to the name and address of the location contains the object the latitude and longitude of the place.
