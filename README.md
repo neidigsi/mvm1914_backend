@@ -3,7 +3,7 @@
 The music club "Musikverein 1914 Münster e. V." provides its members and interested persons since 2019 an own android app. 
 This repository contains the custom developed wordpress-plugin which provides a rest-api for this mentioned app. 
 The android app can be downloaded from google play at the following link: <p>
-[Google Play Store](play.google.com/store/apps/details?id=de.mvm1914.musikverein1914mnsterev)
+[Google Play Store](https://www.play.google.com/store/apps/details?id=de.mvm1914.musikverein1914mnsterev)
 
 In the current version, the app allows users to inform themselves about our association through current articles and events, as well as an up-to-date gallery.
 
