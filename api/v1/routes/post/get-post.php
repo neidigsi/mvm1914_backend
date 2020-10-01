@@ -3,7 +3,8 @@
 /**
  * This method handles GET-requests to the route "/post". It returns all posts in an shortened version.
  * 
- * Reponses:
+ * @param   Object  $data   The data received in request.
+ * @return  WP_REST_Response
  *      - 200   :   Everything went well, an array of all posts will be returned.
  *      - 500   :   An Exception was thrown, the exception-message will be returned in a json-format.
  */
@@ -24,7 +25,7 @@ function posts_get()
             $new_post["date"] = $post->post_date;
             $new_post["categories"] = get_post_categories($post->ID);
             $new_post["author"] = get_the_author_meta("display_name", $post->post_author);
-            $new_post["thumbnail_link"] = get_the_post_thumbnail_url($post->ID);
+            $new_post["thumbnailLink"] = get_the_post_thumbnail_url($post->ID);
 
             array_push($body, $new_post);
         }
@@ -44,7 +45,8 @@ function posts_get()
  * This method handles GET-requests to the route "/post/{id}". It returns extended information about the post
  * with the id given as path-parameter in the request.
  * 
- * Reponses:
+ * @param   Object  $data   The data received in request.
+ * @return  WP_REST_Response
  *      - 200   :   Everything went well, the extended post will be returned.
  *      - 500   :   An Exception was thrown, the exception-message will be returned in a json-format.
  */
@@ -59,7 +61,7 @@ function single_post_get($data)
         $new_post["content"] = $post->post_content;
         $new_post["date"] = $post->post_date;
         $new_post["author"] = get_the_author_meta("display_name", $post->post_author);
-        $new_post["thumbnail_link"] = get_the_post_thumbnail_url($post->ID);
+        $new_post["thumbnailLink"] = get_the_post_thumbnail_url($post->ID);
 
         $resp = new WP_REST_Response($new_post);
         $resp->set_status(200);
@@ -76,6 +78,9 @@ function single_post_get($data)
 /**
  * This method generates an array of strings. The content of the strings are 
  * the names of the categories the post with given id is in. 
+ * 
+ * @param   int     The id of the post.
+ * @return  array   An array with all category-names the post with given id is in.
  */
 function get_post_categories($post_id)
 {
