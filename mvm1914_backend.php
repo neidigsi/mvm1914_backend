@@ -9,6 +9,7 @@
  * Author URI: https://github.com/neidigsi
  */
 
+ require_once 'api/v1/logic/text-operations.php';
  require_once 'api/v1/routes/post/get-post.php';
  require_once 'api/v1/routes/event/get-event.php';
  require_once 'api/v1/routes/contact/get-contact.php';
