@@ -9,7 +9,7 @@ properties:
     type: string
   location:
     $ref: ./location.v1.yaml
-  link:
+  url:
     type: string
   thumbnail_link:
     type: string

@@ -14,5 +14,7 @@ properties:
     type: array
     items:
       type: string
-  thumbnail_link:
+  thumbnailLink:
     type: string
+  allDayEvent:
+    type: boolean
