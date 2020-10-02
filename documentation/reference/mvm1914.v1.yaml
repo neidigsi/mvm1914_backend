@@ -234,6 +234,7 @@ paths:
                   value:
                     error: {}
       operationId: get-wp-json-mvm-event-id
+      description: ''
   /wp-json/mvm/v1/event:
     get:
       summary: Retrieve Information about all Events

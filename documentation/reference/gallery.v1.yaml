@@ -4,5 +4,5 @@ description: ''
 properties:
   title:
     type: string
-  thumbnail_link:
+  thumbnailLink:
     type: string
