@@ -12,20 +12,40 @@ function galleries_get()
 {
     try {
         $gridGallery = new GridGallery_Galleries_Model_Galleries();
-        $galleries = $gridGallery->getAll();
+        $resources = new GridGallery_Galleries_Model_Resources();
+        $photos = new GridGallery_Photos_Model_Photos();
+        $attachment = new GridGallery_Galleries_Attachment();
+        $galleries = $gridGallery->getAll();;
         $body = array();
 
         foreach ($galleries as $gallery) {
             $new_gallery["id"] = $gallery->id;
             $new_gallery["title"] = $gallery->title;
-            $new_gallery["a"] = $gallery->photos[0];
-            $new_gallery["b"] = $gallery->photos[0]->attachment;
-            $new_gallery["c"] = $new_gallery["b"]->sizes;
-            $new_gallery["d"] = $gallery->photos[0]->attachment->sizes->thumbnail;
-            $new_gallery["thumnailLink"] = $gallery->photos[0]->attachment->sizes->thumbnail->url;
-            array_push($body, $new_gallery);
+
+            $resourcesData = $resources->getByGalleryId($gallery->id);
+            $tmp_photos = $photos->getPhotos($resourcesData);
+            $tmp_photos = $tmp_photos[0]->attachment;
+
+            $mil = $tmp_photos["date"];
+            $seconds = $mil / 1000;
+            $year = date("Y", $seconds);
+            $new_gallery["thumbnailLink"] = $tmp_photos["sizes"]["thumbnail"]["url"];
+
+            if ($year != "1970") {
+                if ($body[$year] == null) {
+                    $body[$year]["year"] = $year;
+                    $body[$year]["galleries"] = array();
+                }
+
+                array_push($body[$year]["galleries"], $new_gallery);
+            }
         }
-        $resp = new WP_REST_Response($body);
+
+        $res = array();
+        foreach ($body as $body_part) {
+            array_push($res, $body_part);
+        }
+        $resp = new WP_REST_Response($res);
         $resp->set_status(200);
         $resp->header('Content-type', 'application/json');
         return $resp;
@@ -36,6 +56,8 @@ function galleries_get()
         return $resp;
     }
 }
+
+
 
 /**
  * This method handles GET-requests to the route "/gallery/{id}". It returns extended information about the gallery
