@@ -14,7 +14,6 @@ function galleries_get()
         $gridGallery = new GridGallery_Galleries_Model_Galleries();
         $resources = new GridGallery_Galleries_Model_Resources();
         $photos = new GridGallery_Photos_Model_Photos();
-        $attachment = new GridGallery_Galleries_Attachment();
         $galleries = $gridGallery->getAll();;
         $body = array();
 
@@ -71,19 +70,43 @@ function galleries_get()
 function single_gallery_get($data)
 {
     try {
-        $event = get_post($data["id"]);
+        $gridGallery = new GridGallery_Galleries_Model_Galleries();
+        $resources = new GridGallery_Galleries_Model_Resources();
+        $photos = new GridGallery_Photos_Model_Photos();
+        $galleries = $gridGallery->getAll();;
+        $body = array();
 
-        $new_event["title"] = $event->post_title;
-        $new_event["description"] = $event->post_content;
-        $new_event["url"] = get_permalink($event->ID);
-        $new_event["thumbnailLink"] = get_the_post_thumbnail_url($event->ID);
-        $new_event["startDate"] = get_post_meta($event->ID, 'start_date_time', true);
-        $new_event["endDate"] = get_post_meta($event->ID, 'end_date_time', true);
-        $new_event["allDayEvent"] = get_post_meta($event->ID, 'all_day_event', true) === '1' ? true : false;
-        $new_event["location"] = get_venue($event->ID);
+        foreach ($galleries as $gallery) {
+            if ($gallery->id == $data["id"]) {
+                $body["id"] = $gallery->id;
+                $body["title"] = $gallery->title;
 
-        $resp = new WP_REST_Response($new_event);
-        $resp->set_status(200);
+                $resourcesData = $resources->getByGalleryId($gallery->id);
+                $tmp_photos = $photos->getPhotos($resourcesData);
+
+                $imageLinks = array();
+                $imagePreviewLinks = array();
+
+                foreach ($tmp_photos as $photo) {
+                    array_push($imageLinks, $photo->attachment["sizes"]["thumbnail"]["url"]);
+                    array_push($imagePreviewLinks, $photo->attachment["url"]);
+                }
+
+                $body["imagePreviewLinks"] = $imagePreviewLinks;
+                $body["imageLinks"] = $imageLinks;
+
+                $resp = new WP_REST_Response($body);
+                $resp->set_status(200);
+                $resp->header('Content-type', 'application/json');
+                return $resp;
+            }
+        }
+
+        $body["message"] = "No gallery with given id!";
+        $body["id"] = $data["id"];
+
+        $resp = new WP_REST_Response($body);
+        $resp->set_status(404);
         $resp->header('Content-type', 'application/json');
         return $resp;
     } catch (Exception $e) {

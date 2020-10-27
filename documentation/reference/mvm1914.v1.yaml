@@ -317,6 +317,8 @@ paths:
             application/json:
               schema:
                 $ref: ./gallery_extended.v1.yaml
+        '404':
+          description: Not Found
         '500':
           description: Internal Server Error
           content:
