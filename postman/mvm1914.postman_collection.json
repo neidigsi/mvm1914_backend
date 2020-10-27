@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "761cf411-3b86-408e-b8b3-56ceb540e2b4",
+		"name": "Musikverein 1914 Münster e. V.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Get all Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{post-url}}",
+							"host": [
+								"{{post-url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a specific Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{post-url}}/3575",
+							"host": [
+								"{{post-url}}"
+							],
+							"path": [
+								"3575"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Get all Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{contact-url}}",
+							"host": [
+								"{{contact-url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "Get all Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{group-url}}",
+							"host": [
+								"{{group-url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Galleries",
+			"item": [
+				{
+					"name": "Get all Galleries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gallery-url}}",
+							"host": [
+								"{{gallery-url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a specific Gallery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gallery-url}}/30",
+							"host": [
+								"{{gallery-url}}"
+							],
+							"path": [
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get all Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{event-url}}",
+							"host": [
+								"{{event-url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a specific Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{event-url}}/3273",
+							"host": [
+								"{{event-url}}"
+							],
+							"path": [
+								"3273"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
