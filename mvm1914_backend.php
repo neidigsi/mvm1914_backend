@@ -15,6 +15,9 @@
  require_once 'api/v1/routes/contact/get-contact.php';
  require_once 'api/v1/routes/gallery/get-gallery.php';
  require_once 'api/v1/routes/group/get-group.php';
+ require_once 'init/initialize-database.php';
+
+ register_activation_hook('init/initialize-database.php', 'mvm1914_install' );
 
  add_action('rest_api_init', function() {
     register_rest_route('mvm/v1', 'post', [
