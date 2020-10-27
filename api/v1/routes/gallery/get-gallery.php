@@ -3,7 +3,6 @@
 /**
  * This method handles GET-requests to the route "/gallery". It returns all galleries in an shortened version.
  * 
- * @param   Object  $data   The data received in request.
  * @return  WP_REST_Response
  *      - 200   :   Everything went well, an array of all galleries will be returned.
  *      - 500   :   An Exception was thrown, the exception-message will be returned in a json-format.
@@ -65,6 +64,7 @@ function galleries_get()
  * @param   Object  $data   The data received in request.
  * @return  WP_REST_Response
  *      - 200   :   Everything went well, the extended gallery will be returned.
+ *      - 404   :   No gallery with given id was found in the database.
  *      - 500   :   An Exception was thrown, the exception-message will be returned in a json-format.
  */
 function single_gallery_get($data)
