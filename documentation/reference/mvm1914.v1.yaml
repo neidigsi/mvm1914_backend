@@ -263,6 +263,12 @@ paths:
                   value:
                     error: {}
       operationId: get-wp-json-mvm-v1-event
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: extended
+          description: 'The extended value is used for the old android studio app. If the value is true the response will be extended to the attributes "url" and "description".'
   /wp-json/mvm/v1/gallery:
     get:
       summary: Retrieve Information about all Galleries

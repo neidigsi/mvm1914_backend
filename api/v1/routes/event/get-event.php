@@ -8,9 +8,11 @@
  *      - 200   :   Everything went well, an array of all events will be returned.
  *      - 500   :   An Exception was thrown, the exception-message will be returned in a json-format.
  */
-function events_get()
+function events_get($data)
 {
     try {
+        $extended_infos = $data["extended"];
+
         $args = array(
             'post_type'      => 'aec_events',
             'numberposts'    => 100,
@@ -36,6 +38,12 @@ function events_get()
             $new_event["allDayEvent"] = get_post_meta($event->ID, 'all_day_event', true) === '1' ? true : false;
             $new_event["location"] = get_venue($event->ID);
             $new_event["categories"] = get_event_categories($event->ID);
+
+            if ($extended_infos) {
+                $new_event["description"] = $event->post_content;
+                $new_event["url"] = get_permalink($event->ID);
+            }
+
             array_push($body, $new_event);
         }
         $resp = new WP_REST_Response($body);
